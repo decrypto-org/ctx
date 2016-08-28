@@ -33,3 +33,38 @@ case CTX is not protecting any part of the plaintext, and the maximum being one
 origin per character. The latter would result in the best possible security
 under CTX, although compression would be effectively disabled possibly
 resulting in poor performance.
+
+# Structure
+
+The HTML response plaintext consists of a plain HTML structure along with
+CTX-transformed parts. Each CTX part is annotated using an HTML *div* tag structured as:
+
+```html
+<div id='ctx-i'></div>
+```
+
+where *i* is an integer.
+
+Separately in the same response, JSON will be included like:
+
+```json
+{
+    master: k,
+    content: [
+        {origin: 1, text: 'xxx'},
+        {origin: 2, text: 'yyy'},
+        {origin: 1, text: 'zzz'},
+        ...
+    ]
+}
+```
+
+**k** is a random master key and *xxx*, *yyy*, *zzz* is permuted secrets. The
+permutation used for each piece of content is keyed with k + origin, where
+origin is the number indicated in the same dictionary as the respective
+content.
+
+The index of each secret in the *content* part of the JSON corresponds to *i*
+in CTX tags. On reverse transformation, client will calculate the secrets for
+all permuted data and replace each instance of *ctx-i* with the plaintext of
+the i-th secret in *content*.
