@@ -16,23 +16,41 @@ web applications.
 
 # Overview
 
-CTX depends on separate secrets based on origin. In this case, *origin* is used
-to describe the party that generated each secret, either being web
-application or user generated content.
+CTX depends on separating secrets based on origin. In this case, *origin* is
+used to describe the party that generated each secret, either being web
+application or user generated content. (Do not confuse CTX origins with origins
+of same-origin policy.) For any two secrets A and B annotated with the same
+origin, it must hold true that the party able to change A would not violate the
+application privacy contract by knowing B.
 
-CTX is used to protect secrets in HTML responses of web applications. Each
-character in the plaintext response is considered a secret and should be
-assigned to an origin. Using a keyed pseudo-random permutation function,
-secrets are permuted using different permutations per origin. All characters
-in the same origin will be compressed together, disabling cross-compression of
-characters in different origins.
+CTX is used to protect secrets in HTML and other content-type responses of web
+applications as they travel on the network. The developer must decide which
+portions of the response are sensitive and must be protected as secrets.
+Sensitive data does not only include high-value secrets such as passwords and
+CSRF tokens, but also user data that the developer wishes to keep private as
+well as reflected data. For more information see [unexpected
+secrets](https://ruptureit.com/blog/2016/07/27/unexpected-secrets-and-reflections/).
+
+CTX protects only HTTPS responses, not HTTPS requests. Due to mitigations of
+the CRIME attack, compression in HTTPS requests is always disabled, and hence
+no protection against compression side-channel attacks is required.
+
+A pseudo-random permutation of the secret alphabet is generated per origin. In
+the CTX case, the secret alphabet is always the alphabet of ASCII bytes (0 -
+128). Protected secrets are then permuted using the generated permutation prior
+to transmission on the network by the server. Upon arrival on the client side,
+the inverse permutation is applied to decode the secret. The same permutation
+is applied to all secrets of the same origin. This is similar to a substitution
+cipher. Note that the permuted text is always subsequently encrypted using
+strong symmetric crypto such as AES over TLS.
 
 The usage of origins on the response plaintext is the developer's
 responsibility, the minimum being one origin for the entire response, in which
 case CTX is not protecting any part of the plaintext, and the maximum being one
 origin per character. The latter would result in the best possible security
 under CTX, although compression would be effectively disabled possibly
-resulting in poor performance.
+resulting in poor performance. This is the case with defences such as [secret
+masking](https://www.facebook.com/notes/protect-the-graph/preventing-a-breach-attack/1455331811373632/).
 
 # Structure
 
@@ -40,7 +58,7 @@ The HTML response plaintext consists of a plain HTML structure along with
 CTX-transformed parts. Each CTX part is annotated using an HTML *div* tag structured as:
 
 ```html
-<div id='ctx-i'></div>
+<div data-ctx-origin='i'>xyx</div>
 ```
 
 where *i* is an integer.
@@ -48,23 +66,46 @@ where *i* is an integer.
 Separately in the same response, JSON will be included like:
 
 ```json
-{
-    master: k,
-    content: [
-        {origin: 1, text: 'xxx'},
-        {origin: 2, text: 'yyy'},
-        {origin: 1, text: 'zzz'},
-        ...
-    ]
-}
+[
+    'abc',
+    'cab',
+    'bac',
+    ...
+]
 ```
 
-**k** is a random master key and *xxx*, *yyy*, *zzz* is permuted secrets. The
-permutation used for each piece of content is keyed with k + origin, where
-origin is the number indicated in the same dictionary as the respective
-content.
+'abc', 'cab', 'bac' are the permutations used to permute secrets of origin 0,
+1, and 2 respectively. 'xyx' is the permuted data after applying permutation
+for origin *i*.
 
-The index of each secret in the *content* part of the JSON corresponds to *i*
-in CTX tags. On reverse transformation, client will calculate the secrets for
-all permuted data and replace each instance of *ctx-i* with the plaintext of
-the i-th secret in *content*.
+In the inverse transformation, the client will calculate the secrets for all
+permuted data and replace each instance of *data-ctx-origin* *divs* with the
+plaintext that is generated using the inverse i-th permutation in the JSON.
+
+The JSON is included in a `<script type="application/json"
+id="ctx-permutations"></script>` tag at the HTML `<head></head>`.
+
+# Django implementation
+
+We provide an implementation for Django.
+
+When using Django templating, use `ctx_protect` with an appropriate origin
+parameter to protect your secret:
+
+```python
+    {% ctx_protect secret, "eve" %}
+```
+
+# node.js
+
+We provide an implementation for node.js using the Express web framework and
+mustache. To protect your secrets using mustache, use:
+
+```js
+    {{#ctx_protect "eve"}} {{secret}} {{/ctx_protect}}
+```
+
+# Client implementation
+
+The client logic is implemented in ctx.js. It applies the inverse
+transformations onload.
