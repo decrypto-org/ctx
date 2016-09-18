@@ -1,6 +1,35 @@
 const shuffle = require('shuffle-array'),
       _ = require('lodash');
 
+class AsciPrintable {
+    constructor() {
+        this.alphabet = [];
+        this.permuter = [];
+        this.dict = {};
+
+        let asciiStart = 32;
+        let asxiiStop = 126;
+
+        //alphabet array contains all ASCII symbols
+        for (let i = asciiStart; i <= asxiiStop; i++) {
+            this.alphabet.push(String.fromCharCode(i));
+        }
+
+        this.permuter = shuffle(this.alphabet.slice());
+        this.dict = _.zipObject(this.alphabet, this.permuter);
+    }
+
+    getPermutation() {
+        return this.permuter.join('');
+    }
+
+    permute(secret) {
+        let permSecret = _.map(secret, (secretChar) => {
+            return this.dict[secretChar];
+        });
+        return permSecret.join('');
+    }
+}
 
 class CTX {
     constructor() {
