@@ -4,7 +4,8 @@
   "description": "server-side CTX in nodejs",
   "main": "ctx.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ctx.js"
   },
   "author": "Eva Sarafianou",
   "license": "MIT",
