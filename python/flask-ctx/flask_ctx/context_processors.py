@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ctx_defense import CTX
+from json import dumps
 from flask import Markup
 from cgi import escape
 
@@ -17,6 +18,16 @@ def ctx_processor():
                 )
             )
 
+    def ctx_permutations():
+        return Markup(
+            "<script type='application/json' id='ctx-permutations'>{permutations}</script>".format(
+                permutations=dumps(
+                    ctx_object.get_permutations()
+                )
+            )
+        )
+
     return {
         'ctx_protect': ctx_protect,
+        'ctx_permutations': ctx_permutations
     }
