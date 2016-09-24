@@ -3,6 +3,7 @@
 from random import choice
 from string import ascii_lowercase
 from copy import deepcopy
+from permuters import AsciiPrintablePermuter
 
 
 class SecretNotSetError(Exception):
@@ -30,8 +31,8 @@ class CTX(object):
             generated permutation for the origin with origin_id = i.
         protect(secret, <origin>, <secret_alphabet>): Accepts one to three string
             parameters. If no *origin* is given, a random identifier of 10
-            lowercase letters is generated.
-            Applies the permutation that
+            lowercase letters is generated. If no *secret_alphabet* is given,
+            *ASCII_printable* is used by default. Applies the permutation that
             was generated for the *origin* on the *secret*. If *protect* is
             called for the first time for the *origin*, *secret_alphabet* must
             be set and exist in the keys of *available_permutation_permuters*.
@@ -39,7 +40,8 @@ class CTX(object):
             a dictionary with the following fields:
                 origin_id: An integer that identifies the *origin*.
                 permuted: A string containing the permuted secret.'''
-    available_permutation_generators = {
+    available_permuters = {
+        'ASCII_printable': AsciiPrintablePermuter
     }
 
     def __init__(self):
@@ -58,6 +60,8 @@ class CTX(object):
             permuter = self._permuters[origin_id]
         except KeyError:
             try:
+                if not secret_alphabet:
+                    secret_alphabet = 'ASCII_printable'
                 permuter = self.available_permuters[secret_alphabet]()
             except KeyError:
                 raise PermutationUnavailableError('Permuter for given alphabet is not available.')
