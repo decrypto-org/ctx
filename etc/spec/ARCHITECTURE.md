@@ -85,6 +85,85 @@ plaintext that is generated using the inverse i-th permutation in the JSON.
 The JSON is included in a `<script type="application/json"
 id="ctx-permutations"></script>` tag at the HTML `<head></head>`.
 
+# Python
+
+The basic CTX functionality is implemented in the library *ctx.py*. This library
+defines the class CTX which is responsible for generating and maintaining the
+permutations and applying them on secrets.
+
+In order to generate the permutations, the CTX class uses the
+[random.shuffle](https://docs.python.org/2/library/random.html#random.shuffle)
+function. This function uses the Fisher-Yates shuffle which is proven to be a
+perfect shuffle given a good random number generator.
+
+The CTX class provides the following API.
+
+## API
+
+#### available_permuters
+
+A dictionary that defines the available permuters. The keys are strings that
+identify the secret alphabet. The values are classes that implement the permuter
+interface defined below.
+
+#### protect
+
+Apply CTX on a specific secret.
+
+Arguments:
+
+- secret: A string of the plaintext secret.
+- origin: (Optional) A string defining uniquely the CTX origin for the secret.
+  If no origin is specified, a random origin of 10 lowercase letters will be
+  generated for the secret.
+- secret_alphabet: (Optional) A string that identifies the alphabet of the
+  secret. Must be in *available_permuters* keys. Default value is
+  "ASCII_printable".
+
+Applies the permutation that was generated for the *origin* on the *secret*. The
+permutation alphabet is set the first time *protect* is called per origin. It is
+up to the developer to define different origins in case multiple alphabets need
+to be used.
+
+Returns a dictionary with the following values:
+
+- *origin_id*: an integer corresponding to the origin parameter
+- *permuted*: the permuted data using the permutation generated for the given
+  origin.
+
+#### get_permutations
+
+Get all generated permutations.
+
+Returns an array of strings. The i-th string in the array is the permutation for
+the origin with origin_id=i.
+
+## Permuters
+
+Permuters are classes that implement the permutation functionality
+for different secret alphabets. All permuters must implement the following
+interface:
+
+#### get_permutation
+
+Returns a string containing the generated permutation for the alphabet. This
+string defines a correlation of the plain alphabet and the permutation alphabet,
+i.e. the first character of the permutation is used to replace the occurencies
+of the first character of the plain alphabet in the secret etc.
+
+#### permute
+
+Apply the generated permutation on each character and returns the permuted data.
+
+Arguments:
+- secret: A string of the plaintext secret.
+
+### Implemented permuters
+
+- ASCII_printable: A permuter for the alphabet consisting of printable ASCII
+  characters, as defined in
+  [string.printable](https://docs.python.org/2/library/string.html#string.printable).
+
 # Django implementation
 
 We provide an implementation for Django.
