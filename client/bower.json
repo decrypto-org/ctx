@@ -1,0 +1,26 @@
+{
+  "name": "ctx-client",
+  "homepage": "https://github.com/dimkarakostas/ctx",
+  "authors": [
+    "Dionysis Zindros <dimkarakostas@gmail.com>"
+  ],
+  "description": "A Javascript client for the CTX side-channel defense",
+  "main": "ctx.js",
+  "keywords": [
+    "ctx",
+    "side-channel",
+    "attack",
+    "compression",
+    "breach",
+    "crime",
+    "rupture"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
