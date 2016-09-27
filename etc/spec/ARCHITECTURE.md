@@ -171,9 +171,11 @@ We provide an implementation for Django.
 When using Django templating, use `ctx_protect` with an appropriate origin
 parameter to protect your secret:
 
-```python
-    {% ctx_protect secret, "eve" %}
+```html
+    {% ctx_protect "a secret", "an origin" %}
 ```
+For more information on the Flask CTX, visit the [django-ctx
+repository](https://github.com/dimkarakostas/ctx/tree/master/etc/python/django-ctx).
 
 # node.js
 
