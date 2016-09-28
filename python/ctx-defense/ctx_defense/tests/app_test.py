@@ -50,3 +50,8 @@ class AppTestCase(unittest.TestCase):
         permuted_1 = self.ctx.protect(secret, origin_1)
         permuted_2 = self.ctx.protect(secret, origin_2)
         self.assertNotEqual(permuted_1['origin_id'], permuted_2['origin_id'])
+
+    def test_permutations_deepcopy(self):
+        p = self.ctx.get_permutations()
+        p.append('123')
+        self.assertNotEqual(p, self.ctx.get_permutations())
