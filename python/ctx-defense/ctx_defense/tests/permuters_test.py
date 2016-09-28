@@ -12,3 +12,9 @@ class AsciiprintableTestCase(unittest.TestCase):
     def test_permutation(self):
         permutation = self.permuter.get_permutation()
         self.assertEqual(set(printable), set(permutation))
+
+    def test_same_secret(self):
+        secret = 'secret'
+        permuted_1 = self.permuter.permute(secret)
+        permuted_2 = self.permuter.permute(secret)
+        self.assertEqual(permuted_1, permuted_2)
