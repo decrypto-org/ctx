@@ -21,3 +21,9 @@ class AppTestCase(unittest.TestCase):
         origin_id = permuted['origin_id']
         permutation = self.ctx.get_permutations()[origin_id]
         self.assertEqual(set(printable), set(permutation))
+
+    def test_default_origin(self):
+        permuted_1 = self.ctx.protect('secret')
+        permuted_2 = self.ctx.protect('secret')
+        permutations = self.ctx.get_permutations()
+        self.assertNotEqual(permutations[permuted_1['origin_id']], permutations[permuted_2['origin_id']])
