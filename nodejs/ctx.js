@@ -49,6 +49,14 @@ class CTX {
         let permuter;
         let originId;
 
+        try{
+            if (typeof secret === 'undefined') throw 'Secret not set';
+        }
+        catch(err) {
+            console.log(err);
+            return;
+        }
+
         if (typeof origin === 'undefined') {
             do {
                 let possible = 'abcdefghijklmnopqrstuvwxyz';
