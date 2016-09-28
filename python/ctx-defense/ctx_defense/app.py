@@ -6,11 +6,6 @@ from copy import deepcopy
 from permuters import AsciiPrintablePermuter
 
 
-class SecretNotSetError(Exception):
-    '''Custom exception to handle cases when the secret is empty.'''
-    pass
-
-
 class PermutationUnavailableError(Exception):
     '''Custom exception to handle cases when the secret alphabet parameter for CTX
     initialization does not correspond to an implemented permuter.'''
@@ -53,9 +48,11 @@ class CTX(object):
         return deepcopy(self._permutations)
 
     def protect(self, secret, origin=None, secret_alphabet=None):
-        if not secret:
-            raise SecretNotSetError('Secret not set')
+        if type(secret) != str:
+            secret = str(secret)
         try:
+            if origin and type(origin) != str:
+                origin = str(origin)
             origin_id = self._origins[origin]
             permuter = self._permuters[origin_id]
         except KeyError:
