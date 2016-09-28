@@ -4,7 +4,7 @@
   "description": "server-side CTX in nodejs",
   "main": "ctx.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --harmony spec/run.js",
     "start": "node ctx.js"
   },
   "author": "Eva Sarafianou",
@@ -12,5 +12,8 @@
   "dependencies": {
     "lodash": "^4.16.2",
     "shuffle-array": "^1.0.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2"
   }
 }
