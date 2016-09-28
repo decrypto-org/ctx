@@ -35,3 +35,10 @@ class AppTestCase(unittest.TestCase):
         permuted_1 = self.ctx.protect(secret_1, origin)
         permuted_2 = self.ctx.protect(secret_2, origin)
         self.assertEqual(permuted_1['origin_id'], permuted_2['origin_id'])
+
+    def test_same_origin_same_secret(self):
+        origin = 'origin'
+        secret = '1234'
+        permuted_1 = self.ctx.protect(secret, origin)
+        permuted_2 = self.ctx.protect(secret, origin)
+        self.assertEqual(permuted_1['permuted'], permuted_2['permuted'])
