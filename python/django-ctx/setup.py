@@ -13,7 +13,9 @@ setup(
     long_description=open("README.rst").read(),
     download_url="https://github.com/dimkarakostas/ctx",
     license="MIT",
-    packages=find_packages(),
+    packages=find_packages(exclude=['django_ctx.tests']),
+    test_suite='nose.collector',
+    tests_require=['nose', 'Django>=1.9', 'ctx-defense'],
     include_package_data=True,
     keywords="django ctx defence compression security BREACH",
     install_requires=[
