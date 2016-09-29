@@ -18,7 +18,7 @@ setup(
     keywords="django ctx defence compression security BREACH",
     install_requires=[
         "Django>=1.9",
-        "ctx",
+        "ctx-defense",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
