@@ -46,3 +46,13 @@ class AsciiprintableTestCase(BaseTestCase):
         self.assertTrue(
             re.match(regex, res.rendered_content)
         )
+
+    def test_protected_permutation(self):
+        req = self.reqfactory.get('/')
+        res = TemplateResponse(req, 'full_page.html', {})
+        protected = r"\n(<div data-ctx-origin=')(\d*)('>)([{p}]*)(</div>)\n\n".format(p=re.escape(printable))
+        permutations = r"(<script type='application\/json' id='ctx-permutations'>\[)([{p}]*)(\]<\/script>)\n\n".format(p=re.escape(printable))
+        regex = protected + permutations
+        self.assertTrue(
+            re.match(regex, res.rendered_content)
+        )
