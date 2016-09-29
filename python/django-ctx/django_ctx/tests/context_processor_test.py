@@ -38,3 +38,11 @@ class AsciiprintableTestCase(BaseTestCase):
         self.assertTrue(
             re.match(regex, res.rendered_content)
         )
+
+    def test_permutations_tag(self):
+        req = self.reqfactory.get('/')
+        res = TemplateResponse(req, 'permutations.html', {})
+        regex = r"(<script type='application\/json' id='ctx-permutations'>\[)([{p}]*)(\]<\/script>)\n\n".format(p=re.escape(printable))
+        self.assertTrue(
+            re.match(regex, res.rendered_content)
+        )
