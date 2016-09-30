@@ -1,4 +1,4 @@
-# handlebars-ctx
+# nodejs-ctx-defense
 
 A simple integration of the CTX defence for Express projects.
 CTX supports implementation for the following templates:
@@ -8,14 +8,13 @@ CTX supports implementation for the following templates:
 
 ## Installation
 
-Run ``` npm install --save handlebars-ctx ```
+Run ``` npm install --save nodejs-ctx-defense ```
 
 ## Basic Usage 
+/
+Import *nodejs-ctx-defense* to your Handlebars project
 
-Import *handlebars-ctx* to your Handlebars project,
-
-```{createCtxObject} = require('./ctx-defense');```
-
+```{createCtxObject} = require('./nodejs-ctx-defense');```
 initialise the ctxObject
 
 ```
@@ -57,11 +56,7 @@ app.js
 ```
 const express = require('express'),                                                                                                         
       exphbs  = require('express-handlebars'),
-<<<<<<< HEAD
-      {ctxProtect, ctxPermutations} = require('./handlebars-ctx');
-=======
-      {createCtxObject} = require('./ctx-defense');
->>>>>>> 9f40c49... fix read first
+      {createCtxObject} = require('./nodejs-ctx-defense');
 
 let app = express();
 
@@ -95,7 +90,7 @@ views/index.handlebars
 <html>
     <head>
         <meta charset="utf-8">
-        <title>express-handlebars-ctx Example</title>
+        <title>express-nodejs-ctx-defense Example</title>
     </head>
 
     <body>
