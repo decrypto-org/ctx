@@ -13,7 +13,9 @@ setup(
     long_description=open("README.rst").read(),
     download_url="https://github.com/dimkarakostas/ctx",
     license="MIT",
-    packages=find_packages(),
+    packages=find_packages(exclude=['flask_ctx.tests']),
+    test_suite='nose.collector',
+    tests_require=['nose', 'Flask>=0.10', 'ctx-defense'],
     include_package_data=True,
     keywords="flask ctx defense compression security BREACH",
     install_requires=[
