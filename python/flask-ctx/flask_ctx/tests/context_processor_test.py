@@ -19,3 +19,16 @@ class AsciiprintableTestCase(TestCase):
         regex = r"[{p}]*(<script type='application\/json' id='ctx-permutations'>\[\]<\/script>)[{p}]*".format(p=re.escape(printable))
         permutations_tag = self.processor['ctx_permutations']()
         self.assertTrue(re.match(regex, permutations_tag))
+
+    def test_permutations_with_protected(self):
+        regex = r"[{p}]*(<script type='application\/json' id='ctx-permutations'>\[)([{p}]*)(\]<\/script>)[{p}]*".format(p=re.escape(printable))
+
+        # Test permutations with one entry
+        self.processor['ctx_protect']('secret', 'origin')
+        permutations_tag = self.processor['ctx_permutations']()
+        self.assertTrue(re.match(regex, permutations_tag))
+
+        # Test permutations with two entries
+        self.processor['ctx_protect']('secret', 'origin')
+        permutations_tag = self.processor['ctx_permutations']()
+        self.assertTrue(re.match(regex, permutations_tag))
