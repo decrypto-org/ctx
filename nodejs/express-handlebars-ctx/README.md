@@ -10,8 +10,8 @@ CTX supports implementation for the following templates:
 
 Run ``` npm install --save nodejs-ctx-defense ```
 
-## Basic Usage 
-/
+## Basic Usage for an Express-Handlerbars project
+
 Import *nodejs-ctx-defense* to your Handlebars project
 
 ```{createCtxObject} = require('./nodejs-ctx-defense');```
@@ -142,4 +142,81 @@ HMTL output:
     </html>
 ```
 
+## Basic Usage for an Express/pug(jade) project
 
+Import *nodejs-ctx-defense* to your Express/pug project,
+
+``` {createCtxObject} = require('./nodejs-ctx-defense'); ```
+
+initialise the ctxObject inside app.get
+
+```
+let CtxObject = createCtxObject();
+```
+and add ctxProtect and ctxPermutations in your app.locals
+
+```
+app.locals.ctxProtect = ctxObject.ctxProtect;
+app.locals.ctxPermutations = ctxPermutations;
+```
+
+Use *ctxProtect* to use ctx on secrets:
+
+```html
+div ctxProtect('a secret' 'an origin')
+```
+
+*secret* is a string containing the secret that needs to be protected and
+*origin* is a string uniquely identifying the CTX origin for the secret.
+
+
+Add the *ctxPermutations* to include the used permutations for each
+origin:
+ ```html
+        div=ctxPermutations()
+ ```
+
+The *ctxPermutations* helper needs to be included after all *ctxProtect*
+helpers that use an origin for the first time. It is proposed that it is
+included before the *</body>* HTML tag.
+
+### Example
+
+app.js
+
+```
+const express = require('express'),
+      pug = require('pug'),
+      {createCtxObject} = require('./nodejs-ctx-defense');
+
+    let app = express();
+
+    app.set('view engine', 'pug');
+
+    app.get('/', function (req, res) {
+        let ctxObject = createCtxObject()
+        app.locals.ctxProtect = ctxObject.ctxProtect;
+        app.locals.ctxPermutations = ctxObject.ctxPermutations;
+        res.render('index', {
+        });
+    });
+
+app.listen(3000);
+```
+
+
+/view/index.pug
+
+```
+Html
+    Head
+        title pug ctx exapmle
+    Body
+        div secret1 from user1
+            div!=ctxProtect('lorem ipsum', 'user1')
+        div secret1 from user1
+            div!=ctxProtect('dolor sit amet', 'user1')
+        div secret2 from user2
+            div!=ctxProtect('Lorem ipsum dolor sit amet',o 'user2')
+        div!=ctxPermutations()
+```
