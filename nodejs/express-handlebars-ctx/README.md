@@ -220,3 +220,21 @@ Html
             div!=ctxProtect('Lorem ipsum dolor sit amet',o 'user2')
         div!=ctxPermutations()
 ```
+
+### Basic Usage in Express/EJS projects
+
+Import *nodejs-ctx-defense* to your Express/EJS project, initialise ctxObject and
+add ctxProtect and ctxPermutations in your app.locals,
+as decribed for the Express/Jade projects.
+
+Add ctxProtect tag in your template
+
+```
+<%- ctxProtect('secret', 'origin') %>
+```
+
+and ctxPermutations tag before </body>
+
+```
+<%- ctxPermutations() %>
+```
