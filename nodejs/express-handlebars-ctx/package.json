@@ -9,6 +9,7 @@
   "author": "Eva Sarafianou",
   "license": "MIT",
   "dependencies": {
-    "html-escape": "^2.0.0"
+    "html-escape": "^2.0.0",
+    "ctx-defense": "^1.0.0"
   }
 }

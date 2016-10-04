@@ -1,4 +1,4 @@
-const ctx = require('../ctx'),
+const ctx = require('ctx-defense'),
       htmlescape = require('html-escape');
 
 module.exports = {
