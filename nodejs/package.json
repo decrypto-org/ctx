@@ -1,0 +1,19 @@
+{
+  "name": "ctx-server",
+  "version": "1.0.0",
+  "description": "server-side CTX in nodejs",
+  "main": "ctx.js",
+  "scripts": {
+    "test": "node --harmony spec/run.js",
+    "start": "node ctx.js"
+  },
+  "author": "Eva Sarafianou",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.16.2",
+    "shuffle-array": "^1.0.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2"
+  }
+}
