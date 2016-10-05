@@ -1,10 +1,11 @@
 # nodejs-ctx-defense
 
-A simple integration of the CTX defence for Express projects.
-CTX supports implementation for the following templates:
-* express-Handlebars
-* Jade
-* EJS
+A simple integration of the CTX defence for nodejs projects.
+It has been tested for the following:
+* Express/express-Handlebars
+* Express/pug(jade)
+* Express/EJS
+* Koa/koa-pug
 
 ## Installation
 
@@ -12,7 +13,7 @@ Run ``` npm install --save nodejs-ctx-defense ```
 
 ## Basic Usage for an Express-Handlerbars project
 
-Import *nodejs-ctx-defense* to your Handlebars project
+Import *nodejs-ctx-defense* to your Express project
 
 ```{createCtxObject} = require('./nodejs-ctx-defense');```
 initialise the ctxObject
@@ -29,7 +30,7 @@ helpers: {
 }
 ```
 
-Use *ctxProtect* helper to use ctx on secrets:
+Use *ctxProtect* helper in your Handlebars template to use ctx on secrets:
 
 ```html
 {{ ctxProtect 'a secret' 'an origin' }}}
@@ -39,8 +40,8 @@ Use *ctxProtect* helper to use ctx on secrets:
 *origin* is a string uniquely identifying the CTX origin for the secret.
 
 
-Add the *ctxPermutations* helper to include the used permutations for each 
-origin:
+Add the *ctxPermutations* helper in your Handlebars template
+to include the used permutations for each origin:
  ```html
  {{ ctxPermutations }}
 ```
@@ -56,7 +57,7 @@ app.js
 ```
 const express = require('express'),                                                                                                         
       exphbs  = require('express-handlebars'),
-      {createCtxObject} = require('./nodejs-ctx-defense');
+      {createCtxObject} = require('nodejs-ctx-defense');
 
 let app = express();
 
@@ -160,7 +161,7 @@ app.locals.ctxProtect = ctxObject.ctxProtect;
 app.locals.ctxPermutations = ctxPermutations;
 ```
 
-Use *ctxProtect* to use ctx on secrets:
+Use *ctxProtect* to your pug templates to use ctx on secrets:
 
 ```html
 div ctxProtect('a secret' 'an origin')
@@ -170,8 +171,8 @@ div ctxProtect('a secret' 'an origin')
 *origin* is a string uniquely identifying the CTX origin for the secret.
 
 
-Add the *ctxPermutations* to include the used permutations for each
-origin:
+Add the *ctxPermutations* to your pug templates to
+to include the used permutations for each origin:
  ```html
         div=ctxPermutations()
  ```
@@ -187,7 +188,7 @@ app.js
 ```
 const express = require('express'),
       pug = require('pug'),
-      {createCtxObject} = require('./nodejs-ctx-defense');
+      {createCtxObject} = require('nodejs-ctx-defense');
 
     let app = express();
 
@@ -227,7 +228,7 @@ Import *nodejs-ctx-defense* to your Express/EJS project, initialise ctxObject an
 add ctxProtect and ctxPermutations in your app.locals,
 as decribed for the Express/Jade projects.
 
-Add ctxProtect tag in your template
+Add ctxProtect tag in your EJS template
 
 ```
 <%- ctxProtect('secret', 'origin') %>
@@ -238,3 +239,51 @@ and ctxPermutations tag before </body>
 ```
 <%- ctxPermutations() %>
 ```
+
+### Basic Usage in Koa/koa-pug projects
+
+Import *nodejs-ctx-defense* to your Koa/koa-pug project,
+
+``` {createCtxObject} = require('nodejs-ctx-defense'); ```
+
+initialise the ctxObject inside app.use
+
+```
+let CtxObject = createCtxObject();
+```
+and add ctxProtect and ctxPermutations in your pug.locals
+
+```
+pug.locals.ctxProtect = ctxObject.ctxProtect;
+pug.locals.ctxPermutations = ctxPermutations;
+```
+The tag in the pug template are the same as metioned above
+for the Express/pug projects
+
+
+#### Example
+
+app.js
+
+```
+const koa = require('koa'),
+      router = require('koa-route'),
+      Pug = require('koa-pug'),
+      {createCtxObject} = require('nodejs-ctx-defense');
+
+   const app = koa()
+
+   const pug = new Pug({
+       viewPath: './views',
+       app: app
+    })
+
+   app.use(router.get('/', function* () {
+        let ctxObject = createCtxObject();
+        pug.locals.ctxProtect = ctxObject.ctxProtect;
+        pug.locals.ctxPermutations = ctxObject.ctxPermutations;   
+        this.render('index', true)
+    }));
+    app.listen(3000);
+```
+
