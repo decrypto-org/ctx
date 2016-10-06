@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-ctx-defense",
+  "version": "1.0.0",
+  "description": "server-side CTX in nodejs",
+  "main": "nodejs-ctx-defense.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eva Sarafianou",
+  "license": "MIT",
+  "dependencies": {
+    "html-escape": "^2.0.0",
+    "ctx-defense": "^1.0.0"
+  }
+}
