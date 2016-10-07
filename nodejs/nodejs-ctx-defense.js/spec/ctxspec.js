@@ -12,4 +12,10 @@ describe('nodejs-ctx-defense', () =>  {
         let regex =  /<div data-ctx-origin='\d*'>[\x00-\x7F]*<\/div>/
         expect(permuted).toMatch(regex);
     });
+
+    it('returns a script tag with an empty permutations list', () => {
+        let permutations = ctx.ctxPermutations();
+        let regex =  /<script type="application\/json" id="ctx-permutations">\[\]<\/script>/
+        expect(permutations).toMatch(regex);
+    });
 });
