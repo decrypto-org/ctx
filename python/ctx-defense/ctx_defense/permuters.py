@@ -4,6 +4,11 @@ from string import printable
 from random import shuffle
 
 
+class NotAlphabetMemberError(Exception):
+    '''Custom exception to handle cases when a character in the secret is
+    not in the defined secret alphabet.'''
+
+
 class AsciiPrintablePermuter(object):
     '''A permutation generator for the alphabet that includes all ASCII
     printable characters.
@@ -25,10 +30,16 @@ class AsciiPrintablePermuter(object):
             permutation_dict[printable[index]] = item
         return permutation, permutation_dict
 
+    def _check_secret(self, secret):
+        for i in secret:
+            if i not in self._permutation:
+                raise NotAlphabetMemberError('Secret contains characters inconsistent with alphabet.')
+
     def get_permutation(self):
         return self._permutation
 
     def permute(self, secret):
+        self._check_secret(secret)
         return ''.join(
             map(lambda secret_char: self._permutation_dict[secret_char], secret)
         )
