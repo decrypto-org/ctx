@@ -177,6 +177,20 @@ parameter to protect your secret:
 For more information on the Flask CTX, visit the [django-ctx
 repository](https://github.com/dimkarakostas/ctx/tree/master/etc/python/django-ctx).
 
+# Flask implementation
+
+We provide an implementation for Flask.
+
+Use the `ctx_protect` function in your templates to protect a secret from a
+specific origin.
+
+```html
+{{ ctx_protect("a secret", "an origin") }}
+```
+
+For more information on the Flask CTX, visit the [flask-ctx
+repository](https://github.com/dimkarakostas/ctx/tree/master/etc/python/flask-ctx).
+
 # node.js
 
 We provide an implementation for node.js using the Express web framework and
