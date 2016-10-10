@@ -18,4 +18,11 @@ describe('nodejs-ctx-defense', () =>  {
         let regex =  /<script type="application\/json" id="ctx-permutations">\[\]<\/script>/
         expect(permutations).toMatch(regex);
     });
+
+    it('returns a script tag with one element permutations list', () => {
+        let permuted = ctx.ctxProtect('secret', 'user1');
+        let permutations = ctx.ctxPermutations();
+        let regex =  /<script type="application\/json" id="ctx-permutations">[[\x00-\x7F]*]<\/script>/
+        expect(permutations).toMatch(regex);
+    });
 });
