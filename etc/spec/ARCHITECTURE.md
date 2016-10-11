@@ -174,7 +174,7 @@ parameter to protect your secret:
 ```html
     {% ctx_protect "a secret", "an origin" %}
 ```
-For more information on the Flask CTX, visit the [django-ctx
+For more information on the Django CTX, visit the [django-ctx
 repository](https://github.com/dimkarakostas/ctx/tree/master/etc/python/django-ctx).
 
 # Flask implementation
