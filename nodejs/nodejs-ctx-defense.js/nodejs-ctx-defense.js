@@ -1,4 +1,4 @@
-const ctx = require('ctx-defense'),
+const ctx = require('../ctx-defense/ctx'),
       htmlescape = require('html-escape');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
         return {
             ctxProtect: function(secret, origin) {
                 let protect = ctxDefense.protect(secret, origin); 
-                return '<div data-ctx-origin=' + protect.origin_id + '>' +
+                return '<div data-ctx-origin=\'' + protect.origin_id + '\'>' +
                     htmlescape(protect.permuted) + '</div>';
             },
             ctxPermutations: function() {
