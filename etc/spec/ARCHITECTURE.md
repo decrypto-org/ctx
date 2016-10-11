@@ -174,7 +174,7 @@ parameter to protect your secret:
 ```html
     {% ctx_protect "a secret", "an origin" %}
 ```
-For more information on the Flask CTX, visit the [django-ctx
+For more information on the Django CTX, visit the [django-ctx
 repository](https://github.com/dimkarakostas/ctx/tree/master/etc/python/django-ctx).
 
 # Flask implementation
@@ -193,12 +193,16 @@ repository](https://github.com/dimkarakostas/ctx/tree/master/etc/python/flask-ct
 
 # node.js
 
-We provide an implementation for node.js using the Express web framework and
-mustache. To protect your secrets using mustache, use:
+We provide an implementation for node.js frameworks. The basic CTX
+implementation is in *ctx-defense.js* in the [ctx-defense
+folder](https://github.com/dimkarakostas/ctx/tree/master/nodejs/ctx-defense).
 
-```js
-    {{#ctx_protect "eve"}} {{secret}} {{/ctx_protect}}
-```
+CTX defense can be used in many nodejs frameworks. It has been tested for
+Express/express-handlebars, Express/pug, Express/EJS and Koa.js/koa-pug.
+For more information on the nodejs-ctx-defense and its basic usage in the above
+frameworks/templates visit the [nodejs-ctx-defense
+folder](https://github.com/dimkarakostas/ctx/tree/master/nodejs/nodejs-ctx-defense).
+
 
 # Client implementation
 
