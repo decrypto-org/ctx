@@ -22,7 +22,7 @@ class AsciiPrintablePermuter(object):
         self._permutation, self._permutation_dict = self._generate_permutation()
 
     def _generate_permutation(self):
-        alphabet_list = list(printable)
+        alphabet_list = list(sorted(printable))
         shuffle(alphabet_list)
         permutation = ''.join(alphabet_list)
         permutation_dict = {}
