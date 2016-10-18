@@ -13,7 +13,7 @@ setup(
     long_description=open("README.rst").read(),
     download_url="https://github.com/dimkarakostas/ctx",
     license="MIT",
-    packages=find_packages(exlude=['ctx_defense.tests']),
+    packages=find_packages(exclude=['ctx_defense.tests']),
     test_suite='nose.collector',
     tests_require=['nose'],
     include_package_data=True,
