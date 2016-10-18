@@ -7,11 +7,18 @@ class AsciPrintable {
         this.permuter = [];
         this.dict = {};
 
+        let asciiSpecialStart = 9;
+        let asciiSpecialStop = 13;
+
         let asciiStart = 32;
-        let asxiiStop = 126;
+        let asciiStop = 126;
 
         //alphabet array contains all ASCII symbols
-        for (let i = asciiStart; i <= asxiiStop; i++) {
+        for (let i = asciiSpecialStart; i <= asciiSpecialStop; i++) {
+            this.alphabet.push(String.fromCharCode(i));
+        }
+
+        for (let i = asciiStart; i <= asciiStop; i++) {
             this.alphabet.push(String.fromCharCode(i));
         }
 
