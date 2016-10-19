@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11 pt, conference]{article}  % Comment this line out  if you need a4paper
+\documentclass[a4paper, 11 pt, conference]{article}  % Comment this line out if you need a4paper
 
 % The following packages can be found on http:\\www.ctan.org
 \usepackage{graphics} % for pdf, bitmapped graphics files
@@ -145,6 +145,53 @@ Each time the server issues an HTTPS response, new per-origin permutations are
 generated. The power of the BREACH attack lies to the assumption that we can perform
 multiple requests to the target website while the transmitted secret remains the same. Since new alphabet permutations are generated per HTTPS response, the statistical analysis performed by Rupture is no longer feasible.
 
+\section{Implementation}
+
+Our open source implementation of CTX can be used on popular web frameworks for both client-side and server-side web applications.
+
+\subsection{Server-side}
+
+\subsubsection{CTX protected HTML response}
+The HTML response plaintext consists of a plain HTML structure along with CTX-transformed parts. Each CTX part is annotated using an HTML div tag structured as:
+\lstinline{<div data-ctx-origin='i'>xyx</div>}
+where \textit{i} is an integer origin ID and \textit{xyx} the permuted secret after applying permutation for origin i.
+
+Separately in the same response, a JSON will be included.
+
+\begin{lstlisting}
+    [
+    'abc',
+    'cab',
+    'bac',
+    ...
+    ]
+\end{lstlisting}
+
+where \textit{'abc'}, \textit{'cab'}, \textit{'bac'} are the permutations used to permute secrets of origin 0, 1, and 2 respectively. The JSON is included in a
+\begin{lstlisting}[language=HTML]
+<script type="application/json" id="ctx-permutations">
+\end{lstlisting}
+\begin{lstlisting}[language=HTML]
+</script>
+\end{lstlisting} tag in the HTML body.
+
+\subsubsection{Developer's actions}
+We have implemented the server-side CTX defense for the Django~\cite{c13},
+Flask~\cite{c14}, and Node.js~\cite{c15} web frameworks.
+
+A developer should install the CTX package for the corresponding framework in
+order to use CTX defense. For example, the developer of a Django project should
+add django-ctx to the installed apps, add the ctx processor to the
+context\_processors setting and use \lstinline|{% load ctx_tags %}| to load the ctx tag library in the template.
+
+In order to protect secrets, they should protect them with the ctx\_protect tag \lstinline|{% ctx_protect secret origin alphabet %}|. The origin and alphabet parameters are optional. If no such parameters are passed, the alphabet is the ASCII alphabet and the origin is a randomly generatered id string with 10 lowercase letters.
+
+After all \textit{ctx\_protect} tags that use an origin for the first time, the developer should include the \lstinline|{% ctx_permutations %}| tag to include the permutations used for each origin. It is proposed that it is included before the \lstinline| </body>| HTML tag.
+
+\subsection{Client-side}
+On the client-side, the browser runs a Javascript library for the inverse permutation on load. It searches for the tag with id \textit{ctx-permutations} to access the JSON table with the stored per-origin permutations and performs the inverse permutation for all ctx tags.
+The developer should add the script \lstinline|<script src='ctx.js'> </script> | before the \lstinline|</head>| tag.
+
 \begin{thebibliography}{10}
 
 \bibitem{c1} J. Rizzo, T. Duong: The CRIME attack, Ekoparty, 2012
@@ -166,6 +213,10 @@ multiple requests to the target website while the transmitted secret remains the
 \bibitem{c9}[online] URL: \url{https://en.wikipedia.org/wiki/Same-origin_policy} 
 
 \bibitem{c10} [online] URL: \url{https://en.wikipedia.org/wiki/Fisher-Yates_shuffle}
+
+\bibitem{c11} [online] URL: \url{https://www.djangoproject.com/} 
+
+\bibitem{c12} [online] URL: \url{https://nodejs.org/en/} 
 
 \end{thebibliography}
 
