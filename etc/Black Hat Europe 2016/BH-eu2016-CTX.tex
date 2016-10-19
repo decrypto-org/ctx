@@ -208,6 +208,15 @@ about secret tokens. However, the size for the dataset compressed when using
 SafeDeflate is 200\%-400\% times larger than the size of the compressed dataset if the
 standard Deflate algorithm is used. Our implementation increases the size by only 5\% of the non-CTX protected size.
 
+\section{Future Work}
+CTX defense is the natural conclusion of BREACH, TIME, Rupture, and any
+compression side-channel attack, since it combines security with
+compressibility. CTX should be implemented for other web frameworks, such as
+Ruby on Rails and Lavarel, and can be extended for other encoding standards,
+such as UTF-8. CTX can also be implemented for web frameworks which build API
+services and return other data formats like JSON. This way the data served from
+the database to the user will be transmitted over the network in a secure way.
+
 \begin{thebibliography}{13}
 
 \bibitem{c1} J. Rizzo, T. Duong: The CRIME attack, Ekoparty, 2012
