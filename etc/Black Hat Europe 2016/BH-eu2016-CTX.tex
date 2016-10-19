@@ -50,4 +50,73 @@ cross-compressibility.
 
 \end{abstract}
 
+\section{Introduction}
+In 2012 CRIME~\cite{c1} showed for the first time that side-channel compression
+attacks can be successful against TLS. CRIME targeted HTTPS requests and has
+since been mitigated by disabling compression at the TLS level~\cite{c2}.
+
+In 2013 TIME~\cite{c3} and BREACH~\cite{c4} introduced an attack vector that exploited
+compression on HTTP responses to compromise TLS. This vector takes advantage of the
+characteristics of the DEFLATE algorithm~\cite{c5}, the basis of most
+compression applications, in order to steal secrets from applications using
+stream ciphers.
+
+In 2015 RC4 is considered insecure~\cite{c6} which forces most websites to use
+AES block ciphers. Services like Facebook also tried to prevent BREACH~\cite{c7}
+using secret masking, although this method protected CSRF tokens only and the
+fundamental aspects of BREACH were still not mitigated.
+
+In 2016, both Rupture~\cite{c8} and HEIST~\cite{c9} introduced new threats
+regarding compression side-channel attacks. Rupture showed that BREACH can
+evolve to attack major web applications and steal secrets that were not
+previously considered as targets of BREACH. It also incorporated statistical
+methods to bypass noise induced from block ciphers or random data included in the response plaintext.
+
+HEIST demonstrated that compression-based attacks, such as CRIME and BREACH, can
+be performed solely in the browser by a malicious website or script. It does not
+require Man-in-the-Middle agents since it abuses the way responses are sent at the TCP level.
+
+These attack techniques, which pose an imminent threat to online security and privacy, have still not been mitigated.
+
+Our work introduces a generic defense method which disqualifies compression
+detectability features of existing protocols. CTX is a cryptographic method
+which defends against any compression side-channel attack. It prevents
+cross-compressibility by separating the secrets from different origins and using
+context hiding in a per-origin manner.
+
+The existing suggested defense for BREACH~\cite{c10} includes disabling
+compression or completely bypassing compression, which results in significant
+performance penalties. On the other hand, there has not been proposed a solution
+that keeps compression intact and solves the security issues. It is not known if
+such a solution is even possible. Our method lies between the two options
+regarding compression usage. We achieve a good balance by slightly reducing
+compression size and time performance while achieving full security.
+
+We release an open source implementation of CTX in popular web frameworks both
+for client-side and server-side web applications. Our implementation runs at the
+application layer, is opt-in, and does not require modifications to web
+standards or the underlying web server.
+
+We conclude that if secrets are separated by origin at the application level using the CTX defense, compression side-channel attacks are mitigated.
+
+\begin{thebibliography}{10}
+
+\bibitem{c1} J. Rizzo, T. Duong: The CRIME attack, Ekoparty, 2012
+
+\bibitem{c2} D. Goodin, Crack in Internet’s foundation of trust allows HTTPS session hijacking, Ars Technica, 2012
+
+\bibitem{c3} Y. Gluck, N. Harris, A. Prado, BREACH: Reviving the CRIME attack, Black Hat USA, 2013
+
+\bibitem{c4} [online] URL: \url{https://en.wikipedia.org/wiki/DEFLATE} 
+
+\bibitem{c5} A.Popov, Prohibiting RC4 Cipher Suites, RFC 7465, 2015
+
+\bibitem{c6} [online] URL: \url{https://www.facebook.com/notes/protect-the-graph/preventing-a-breach-attack/1455331811373632}
+
+\bibitem{c7}  D.Karakostas, D.Zindros: Practical New Developments in the BREACH Attack, Black Hat Asia, 2016
+
+\bibitem{c8} M. Vanhoef, Tom Van Goethem: HEIST: HTTP Encrypted Information can be 220 Stolen through TCP-windows, Black Hat USA 2016
+
+\end{thebibliography}
+
 \end{document}
