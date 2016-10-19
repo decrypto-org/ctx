@@ -36,11 +36,11 @@ the CRIME attack, compression in HTTPS requests is always disabled, and hence
 no protection against compression side-channel attacks is required.
 
 A pseudo-random permutation of the secret alphabet is generated per origin. In
-the CTX case, the secret alphabet is always the alphabet of ASCII bytes (0 -
-128). Protected secrets are then permuted using the generated permutation prior
-to transmission on the network by the server. Upon arrival on the client side,
-the inverse permutation is applied to decode the secret. The same permutation
-is applied to all secrets of the same origin. This is similar to a substitution
+the CTX case, the secret alphabet can be the alphabet of ASCII bytes (0 - 128).
+Protected secrets are then permuted using the generated permutation prior to
+transmission on the network by the server. Upon arrival on the client side, the
+inverse permutation is applied to decode the secret. The same permutation is
+applied to all secrets of the same origin. This is similar to a substitution
 cipher. Note that the permuted text is always subsequently encrypted using
 strong symmetric crypto such as AES over TLS.
 
@@ -87,9 +87,12 @@ id="ctx-permutations"></script>` tag at the HTML `<head></head>`.
 
 # Python
 
-The basic CTX functionality is implemented in the library *ctx.py*. This library
-defines the class CTX which is responsible for generating and maintaining the
-permutations and applying them on secrets.
+The basic CTX functionality is implemented in the *ctx-defense* package. This
+package defines the *app.py* and the *permuters.py* libraries. The
+first defines the CTX class which is responsible for generating and
+maintaining the permutations and applying them on secrets. The second defines
+the permuter classes for different types of alphabets. As of this point, one
+permuter for the ASCII printable alphabet exists.
 
 In order to generate the permutations, the CTX class uses the
 [random.shuffle](https://docs.python.org/2/library/random.html#random.shuffle)
@@ -114,20 +117,20 @@ Arguments:
 
 - secret: A string of the plaintext secret.
 - origin: (Optional) A string defining uniquely the CTX origin for the secret.
-  If no origin is specified, a random origin of 10 lowercase letters will be
-  generated for the secret.
+  If no origin is specified, a random origin with an id string of 10 lowercase
+  letters will be generated for this secret.
 - secret_alphabet: (Optional) A string that identifies the alphabet of the
   secret. Must be in *available_permuters* keys. Default value is
   "ASCII_printable".
 
 Applies the permutation that was generated for the *origin* on the *secret*. The
-permutation alphabet is set the first time *protect* is called per origin. It is
-up to the developer to define different origins in case multiple alphabets need
-to be used.
+permutation is set the first time *protect* is called per origin. It is up to
+the developer to define different origins in case multiple alphabets need to be
+used.
 
 Returns a dictionary with the following values:
 
-- *origin_id*: an integer corresponding to the origin parameter
+- *origin_id*: an integer corresponding to the origin parameter.
 - *permuted*: the permuted data using the permutation generated for the given
   origin.
 
@@ -153,7 +156,7 @@ of the first character of the plain alphabet in the secret etc.
 
 #### permute
 
-Apply the generated permutation on each character and returns the permuted data.
+Applies the generated permutation on each character and returns the permuted data.
 
 Arguments:
 - secret: A string of the plaintext secret.
