@@ -99,6 +99,52 @@ standards or the underlying web server.
 
 We conclude that if secrets are separated by origin at the application level using the CTX defense, compression side-channel attacks are mitigated.
 
+\section{Theoretical analysis}
+
+CTX depends on separating secrets based on origin. Origin is used to describe
+the party that generated the secret. The origin can be either the web
+application or a user. A CTX origin should not be confused with origins of
+same-origin policy~\cite{c11}, which is a completely different notion. Thus, for any secrets A and B generated from the same origin, whoever is able to change the secret A can also know the secret B with no violation of the application privacy contract.
+
+CTX is used to protect HTML and other content-type responses of web applications as they travel on the network. It protects only HTTPS responses, not HTTPS requests. The mitigation of the CRIME attack resulted in compressionless HTTPS requests and hence no protection against compression side-channel attacks is required.
+
+It is up to the application developer to decide which portions of the response
+are sensitive and must be protected as secrets. Sensitive data does not only
+include high-value secrets such as passwords and CSRF tokens, but also user data
+that the developer wishes to keep private. Some examples are the bodies of email
+messages in Gmail, the chat messages received or sent to a friend on Facebook,
+the contents of documents and spreadsheets in Google Docs and the list of online
+friends on Facebook or Google Hangouts, as they contain all the important
+contacts of the victim. Practically any piece of information which is only
+accessible when logged in is potentially a secret and should be CTX
+protected.
+
+The developer should also separate the HTML plaintext into contexts. Each context contains portions of the plaintext. Some of these contexts do not typically need compression-security protection, e.g. static HTML portions that are accessible on a website even when logged out. However, sensitive data, as mentioned above, require compression-security protection.
+
+The minimum amount of origins is one origin for the entire response, in which case CTX is not protecting any part of the plaintext, and the maximum is one origin per character. The latter would result in the best possible security under CTX, although compression would be effectively disabled possibly resulting in poor performance. This is the case with defenses such as secret masking.
+
+The portions of the plaintext within contexts of different origin are then
+forced to compress separately, i.e. not cross-compress. However, compression is
+achieved within each context. In order to acomplish this, CTX generates a
+pseudo-random permutation of the secret alphabet for each origin. The secret
+alphabet is by default the alphabet of ASCII bytes (0 - 128). In order to
+randomly permute the secret alphabet, we use the Fisher--Yates shuffle
+algorithm~\cite{c12}. This algorithm puts all the elements into a
+hat and continually determines the next element by randomly drawing an element
+from the hat until no elements remain. The Fisher--Yates shuffle algorithm
+produces an unbiased permutation meaning that every permutation is equally
+probable.
+
+Secrets are then permuted by the server using the generated permutation of the
+corresponding origin prior to TLS encryption and network transmission. Upon
+arrival on the client side, the inverse permutation is applied to decode the
+secret. The same permutation is applied to all secrets of the same origin. That
+way, better compression is achieved intra-origin.
+
+Each time the server issues an HTTPS response, new per-origin permutations are
+generated. The power of the BREACH attack lies to the assumption that we can perform
+multiple requests to the target website while the transmitted secret remains the same. Since new alphabet permutations are generated per HTTPS response, the statistical analysis performed by Rupture is no longer feasible.
+
 \begin{thebibliography}{10}
 
 \bibitem{c1} J. Rizzo, T. Duong: The CRIME attack, Ekoparty, 2012
@@ -116,6 +162,10 @@ We conclude that if secrets are separated by origin at the application level usi
 \bibitem{c7}  D.Karakostas, D.Zindros: Practical New Developments in the BREACH Attack, Black Hat Asia, 2016
 
 \bibitem{c8} M. Vanhoef, Tom Van Goethem: HEIST: HTTP Encrypted Information can be 220 Stolen through TCP-windows, Black Hat USA 2016
+
+\bibitem{c9}[online] URL: \url{https://en.wikipedia.org/wiki/Same-origin_policy} 
+
+\bibitem{c10} [online] URL: \url{https://en.wikipedia.org/wiki/Fisher-Yates_shuffle}
 
 \end{thebibliography}
 
