@@ -4,7 +4,7 @@ CTX uses context hiding in a per-origin manner to separate secrets from
 different origins in order to avoid cross-compressibility.
 
 Compression side-channel attacks is a domain that evolved greatly in recent
-years. CTX fills the void as a generic defence that completely mitigates such
+years. CTX fills the void as a generic defense that completely mitigates such
 attacks. Our aim is to create a production-level solution that enables web
 services' administrators to strengthen web applications. It runs at the
 application layer, is opt-in, and does not require modifications to web
@@ -49,7 +49,7 @@ responsibility, the minimum being one origin for the entire response, in which
 case CTX is not protecting any part of the plaintext, and the maximum being one
 origin per character. The latter would result in the best possible security
 under CTX, although compression would be effectively disabled possibly
-resulting in poor performance. This is the case with defences such as [secret
+resulting in poor performance. This is the case with defenses such as [secret
 masking](https://www.facebook.com/notes/protect-the-graph/preventing-a-breach-attack/1455331811373632/).
 
 # Structure

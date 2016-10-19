@@ -1,7 +1,7 @@
 flask-ctx
 ==============
 
-A simple integration of the CTX defence against side-channel attacks for Flask projects.
+A simple integration of the CTX defense against side-channel attacks for Flask projects.
 
 Requirements
 ============

@@ -1,7 +1,7 @@
 ctx
 ==============
 
-The CTX defence library.
+The CTX defense library.
 
 Installation
 ============
@@ -32,7 +32,7 @@ protected_secret = ctx_object.protect(secret, origin, alphabet)
 permutations = ctx_object.get_permutations()
 ```
 
-- For more information on the CTX library and the classes it implements visit the defence's [website](https://github.com/dimkarakostas/ctx).
+- For more information on the CTX library and the classes it implements visit the defense's [website](https://github.com/dimkarakostas/ctx).
 
 Example
 =======

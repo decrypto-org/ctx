@@ -1,7 +1,7 @@
 django-ctx
 ==============
 
-A simple integration of the CTX defence against side-channel attacks for Django projects.
+A simple integration of the CTX defense against side-channel attacks for Django projects.
 
 Requirements
 ============
