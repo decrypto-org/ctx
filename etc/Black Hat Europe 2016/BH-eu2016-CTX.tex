@@ -1,0 +1,53 @@
+\documentclass[a4paper, 11 pt, conference]{article}  % Comment this line out  if you need a4paper
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{url}
+\usepackage{listings}
+
+\title{\textbf{CTX: Eliminating BREACH with Context Hiding}}
+
+\author{
+    Dimitris Karakostas\footnotemark[1]\\
+    University of Athens\\
+    dimit.karakostas@gmail.com\\
+    \and
+    Aggelos Kiayias\footnotemark[1]\\
+    University of Edinburgh\\
+    akiayias@inf.ed.ac.uk\\
+    \and
+    Eva Sarafianou\footnotemark[1]\\
+    University of Athens\\
+    eva.sarafianou@gmail.com\\
+    \and
+    Dionysis Zindros\thanks{Research supported by ERC project CODAMODA, project \#259152.}\\
+    University of Athens\\
+    dionyziz@di.uoa.gr\\
+}
+
+\date{}
+\pagenumbering{arabic}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{plain}
+\pagestyle{plain}
+
+\begin{abstract}
+
+The BREACH attack presented at Black Hat USA 2013 has still not been mitigated,
+even in the latest versions of TLS, despite the new developments and
+optimizations presented at Black Hat Asia 2016. BREACH and similar attacks pose
+a threat against all practical web applications which use compression together
+with encryption. We present a generic defense method which eliminates problems
+that arise from compression detectability features of existing protocols. We
+introduce CTX, Context Transformation Extension, a cryptographic method which
+defends against BREACH, CRIME, TIME, and any compression side-channel attack in
+general. CTX operates at the application layer and uses context hiding in a
+per-origin manner to separate secrets from different origins in order to avoid
+cross-compressibility.
+
+\end{abstract}
+
+\end{document}
