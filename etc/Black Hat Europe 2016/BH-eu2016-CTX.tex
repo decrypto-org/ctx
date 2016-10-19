@@ -192,7 +192,23 @@ After all \textit{ctx\_protect} tags that use an origin for the first time, the 
 On the client-side, the browser runs a Javascript library for the inverse permutation on load. It searches for the tag with id \textit{ctx-permutations} to access the JSON table with the stored per-origin permutations and performs the inverse permutation for all ctx tags.
 The developer should add the script \lstinline|<script src='ctx.js'> </script> | before the \lstinline|</head>| tag.
 
-\begin{thebibliography}{10}
+\section{Related Work}
+
+Our work is based on both the idea of disabling compression, a successful
+security mechanism against all compression attacks, as well as the idea of
+masking secrets, also a perfectly successful security mechanism, employed by
+Facebook and others. However, these two previous defense ideas lack in
+compression performance, which we improve on and provide a balance between
+security and performance. Our implementation is inspired by the authors of the original BREACH paper who wrote in the defenses section "One approach that completely solves the problem is to put user input in a completely different compression context than that of application secrets. Depending on the nature of the application and its implementation, this may be very tedious and highly impractical." This was a good idea, which was not elaborated further by Prado etc.
+
+SafeDeflate~\cite{c16}, published in 2016, is also a proposal to prevent BREACH
+and CRIME by eliminating compression detectability. It is a modification of the
+standard Deflate algorithm in which compression ratio does not leak information
+about secret tokens. However, the size for the dataset compressed when using
+SafeDeflate is 200\%-400\% times larger than the size of the compressed dataset if the
+standard Deflate algorithm is used. Our implementation increases the size by only 5\% of the non-CTX protected size.
+
+\begin{thebibliography}{13}
 
 \bibitem{c1} J. Rizzo, T. Duong: The CRIME attack, Ekoparty, 2012
 
@@ -217,6 +233,8 @@ The developer should add the script \lstinline|<script src='ctx.js'> </script> |
 \bibitem{c11} [online] URL: \url{https://www.djangoproject.com/} 
 
 \bibitem{c12} [online] URL: \url{https://nodejs.org/en/} 
+
+\bibitem{c13} [online] URL: \url{https://eprint.iacr.org/2016/958.pdf}
 
 \end{thebibliography}
 
