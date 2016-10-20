@@ -192,6 +192,81 @@ After all \textit{ctx\_protect} tags that use an origin for the first time, the 
 On the client-side, the browser runs a Javascript library for the inverse permutation on load. It searches for the tag with id \textit{ctx-permutations} to access the JSON table with the stored per-origin permutations and performs the inverse permutation for all ctx tags.
 The developer should add the script \lstinline|<script src='ctx.js'> </script> | before the \lstinline|</head>| tag.
 
+\subsection{Experiments}
+We have conducted several experiments to evaluate the performance of web
+services protected by CTX. The results of these experiments are overwhelmingly
+positive and should be taken into account when considering incorporating CTX in
+a web service.
+
+The CTX parameters that affect performance are basically 4: the number of
+origins, the total amount of plaintext response, the amount of secrets in the
+response, and the distribution of secrets to origins. Each parameter affects the
+performance differently and will be examined thoroughly in the following
+sections.
+
+Our experiments focused on each parameter separately, so the results reflect the
+performace under each one independently. A combination of the parameters may
+result in slightly different results when used in real-world systems.
+
+In all our tests we use an HTML web page where each secret is a string of
+English literature.
+
+\subsubsection{Origins}
+The number of origins mainly affects the overhead of data in the response. The
+time overhead was found to be insignificant so it will not be included here. The
+more origins are used the bigger the response, both compressed and uncompressed,
+is expected to be.
+
+In our experiment, we use a 650KB page and a fixed amount of secrets, which
+comprise 1\% of the page, and tested the use of a number of origins in the range
+[0, 50]. The worst case scenario, using 50 origins, resulted in a 12\% overhead
+in the compressed response. In other words, the CTX-protected response is
+expected to be 1.12x the size of the unprotected, which is practically
+insignificant considering the security benefits. In comparison, disabling
+compression would result in 976.8\% overhead.
+
+\subsubsection{Total response}
+The size of the total response affects the impact of CTX on protected secrets.
+Time is again not an issue here and will not be described.
+
+Our experiment tests CTX's performace on web pages ranging from 13KB to 650KB.
+A base of comparison could be Google Inbox's main page, which is roughly 550KB.
+We maintain the percentage of secrets and the origins the same throughout the
+test to 1\% and 50 respectively.
+
+Our results show that as the response grows larger, the overhead caused by CTX
+is minimized. Specifically, for a typical 13KB web page, protecting 1\% of it
+with CTX would add a 228\% overhead. A 650KB page on the other
+hand would suffer an overhead of only 13\%. Disabling compression alltogether
+would add overhead that ranges from 500\% to 91\% for the same web pages.
+
+\subsubsection{Amount of secrets}
+The percentage of the web page that is protected by CTX also affects the
+application's performance. In this case, we consider a 650KB web page, a size
+representative of Facebook's home page, which is protected by CTX using 50
+origins.
+
+Our experiment tests the effect when 1\% up to 50\% of the web page is
+protected. Results show that the bigger the protected part is, the bigger the effect
+of CTX on performance will be. Specifically, protecting 1\% of such a web page
+would result in a 5\% size overhead, whereas protecting 50\% of it would result
+in a 35\% overhead.
+
+This is also the only test that demonstrated a time overhead. Specifically, the
+1\% case introduces a 1ms overhead, while the 50\% case adds 45ms of server-side
+work.
+
+However, it should be noted that our tests are very strict. A typical website
+response consists mainly of HTML code or libraries that usually need not be
+protected. In this case, the amount of secrets in the response would not exceed
+1\% of the total response, in which case the CTX overhead as shown by our
+experiments is totally acceptable. For example, Facebook and Gmail typically
+only need protect approximately 0.5\% of the response.
+
+In comparison, disabling compression would again result in 976.8\% load overhead
+and a network transmittion time overhead that, depending on the client's and the
+server's network, may be up to seconds.
+
 \section{Related Work}
 
 Our work is based on both the idea of disabling compression, a successful
