@@ -9,7 +9,7 @@ setup(
     author="Dimitris Karakostas",
     author_email="dimit.karakostas@gmail.com",
     url="https://github.com/dimkarakostas/ctx",
-    description="A simple integration of the CTX defence against side-channel attacks for Django projects.",
+    description="A simple integration of the CTX defense against side-channel attacks for Django projects.",
     long_description=open("README.rst").read(),
     download_url="https://github.com/dimkarakostas/ctx",
     license="MIT",
@@ -17,7 +17,7 @@ setup(
     test_suite='nose.collector',
     tests_require=['nose', 'Django>=1.9', 'ctx-defense'],
     include_package_data=True,
-    keywords="django ctx defence compression security BREACH",
+    keywords="django ctx defense compression security BREACH",
     install_requires=[
         "Django>=1.9",
         "ctx-defense",

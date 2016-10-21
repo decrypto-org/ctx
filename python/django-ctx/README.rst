@@ -1,7 +1,7 @@
 django-ctx
 ==============
 
-A simple integration of the CTX defence against side-channel attacks for Django projects.
+A simple integration of the CTX defense against side-channel attacks for Django projects.
 
 Requirements
 ============
@@ -69,11 +69,7 @@ printable](https://docs.python.org/2/library/string.html#string.printable) chara
 
 Example
 =======
-
 ```html
-{% load ctx %}
-
-
 <!DOCTYPE html>
 
 <html>
@@ -84,6 +80,8 @@ Example
 </head>
 
 <body>
+  {% load ctx_tags %}
+
   This is a very sensitive secret from origin1: {% ctx_protect "my secret" "origin1" %}
   This is another very sensitive secret from origin2: {% ctx_protect "my other secret" "origin2" "ASCII_printable" %}
 

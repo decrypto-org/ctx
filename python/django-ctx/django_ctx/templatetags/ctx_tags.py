@@ -17,7 +17,9 @@ def ctx_protect(context, secret, origin=None, alphabet=None):
     # HTML escape is on by default in Django, but just in case force it anyway
     protected_secret = escape(ctx.protect(secret, origin, alphabet))
 
-    return protected_secret
+    return {
+        'protected': protected_secret
+    }
 
 
 @register.inclusion_tag('ctx/permutations.html', takes_context=True)
