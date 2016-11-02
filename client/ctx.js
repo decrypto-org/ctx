@@ -31,12 +31,13 @@ let CTXHTML = {
     permutations: [],
     _unpermuteElement: function(element) {
         let idx = element.dataset.ctxOrigin;
-        if (this.permutations.length <= idx) {
+
+        if (idx >= this.permutations.length) {
             console.log('CTX: Invalid permutation index: ' + idx + '. Skipping.');
             return;
         }
 
-        let permutation = this.permutations[element.dataset.ctxOrigin];
+        let permutation = this.permutations[idx];
         let permuted = element.innerHTML;
         console.log('Permuted secret: ', permuted);
         permuted = decodeURIComponent(permuted);
