@@ -19,6 +19,7 @@ let CTX = {
             secret += inversePermutationMap[permuted[i]];
         }
 
+        return secret;
     },
 };
 
