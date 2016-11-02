@@ -18,15 +18,15 @@ let CTX = {
         for (let i = 0; i < permuted.length; ++i) {
             secret += inversePermutationMap[permuted[i]];
         }
-    },
-    _getPermutations: function() {
-        let permutationsElement = document.getElementById('ctx-permutations');
 
-        if (permutationsElement == null) {
-            throw 'CTX: No permutation translation table is available. Aborting.'
-        }
-        this.permutations = JSON.parse(permutationsElement.textContent);
     },
+};
+
+/* HTML-specific CTX library.
+ * Applies the inverse CTX permutation on HTML secrets stored in div tags.
+ * Reads forward permutation table from application/json. */
+let CTXHTML = {
+    permutations: [],
     _unpermuteElement: function(element) {
         let idx = element.dataset.ctxOrigin;
         if (this.permutations.length <= idx) {
@@ -36,7 +36,7 @@ let CTX = {
 
         let permutation = this.permutations[element.dataset.ctxOrigin];
         let permuted = element.innerHTML;
-        let secret = this.unpermute(permutation, permuted);
+        let secret = CTX.unpermute(permutation, permuted);
         element.innerHTML = secret;
     },
     _getPermutedElements: function() {
@@ -51,6 +51,16 @@ let CTX = {
         }
 
         return elements;
+    },
+    _getPermutations: function() {
+        let permutationsElement = document.getElementById('ctx-permutations');
+
+        if (permutationsElement == null) {
+            throw 'CTX: No permutation translation table is available. Aborting.'
+        }
+        this.permutations = JSON.parse(permutationsElement.textContent);
+        console.log('Recovered permutations table:');
+        console.log(this.permutations);
     },
     process: function() {
         this._getPermutations();
