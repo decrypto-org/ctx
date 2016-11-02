@@ -22,12 +22,13 @@ class AsciiPrintablePermuter(object):
         self._permutation, self._permutation_dict = self._generate_permutation()
 
     def _generate_permutation(self):
-        alphabet_list = list(sorted(printable))
+        initial_alphabet = sorted(printable)
+        alphabet_list = list(printable)
         shuffle(alphabet_list)
         permutation = ''.join(alphabet_list)
         permutation_dict = {}
         for index, item in enumerate(permutation):
-            permutation_dict[printable[index]] = item
+            permutation_dict[initial_alphabet[index]] = item
         return permutation, permutation_dict
 
     def _check_secret(self, secret):
