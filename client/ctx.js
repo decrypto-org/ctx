@@ -78,4 +78,4 @@ let CTXHTML = {
     }
 };
 
-CTXHTML.process();
+document.addEventListener('DOMContentLoaded', CTXHTML.process.bind(CTXHTML));
