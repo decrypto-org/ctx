@@ -3,8 +3,8 @@
 
 let CTX = {
     unpermute: function(permutation, permuted) {
-        console.log('Unpermuting "' + permuted + '"\
-                     by reversing permutation "' + permutation + '"');
+        // console.log('Unpermuting "' + permuted + '"\
+        //              by reversing permutation "' + permutation + '"');
         let secretAlphabet = permutation.split('').slice();
         secretAlphabet.sort();
 
@@ -33,15 +33,15 @@ let CTXHTML = {
         let idx = element.dataset.ctxOrigin;
 
         if (idx >= this.permutations.length) {
-            console.log('CTX: Invalid permutation index: ' + idx + '. Skipping.');
+            // console.log('CTX: Invalid permutation index: ' + idx + '. Skipping.');
             return;
         }
 
         let permutation = this.permutations[idx];
         let permuted = element.innerHTML;
-        console.log('Permuted secret: ', permuted);
+        // console.log('Permuted secret: ', permuted);
         permuted = decodeURIComponent(permuted);
-        console.log('Decoded permuted secret: ', permuted);
+        // console.log('Decoded permuted secret: ', permuted);
         let secret = CTX.unpermute(permutation, permuted);
         element.innerHTML = secret;
     },
@@ -65,8 +65,8 @@ let CTXHTML = {
             throw 'CTX: No permutation translation table is available. Aborting.'
         }
         this.permutations = JSON.parse(permutationsElement.textContent);
-        console.log('Recovered permutations table:');
-        console.log(this.permutations);
+        // console.log('Recovered permutations table:');
+        // console.log(this.permutations);
     },
     process: function() {
         this._getPermutations();
