@@ -46,17 +46,7 @@ let CTXHTML = {
         element.innerHTML = secret;
     },
     _getPermutedElements: function() {
-        let divs = document.getElementsByTagName('div');
-        let elements = [];
-
-        for (let i = 0; i < divs.length; ++i) {
-            let div = divs[i];
-            if (typeof div.dataset.ctxOrigin !== 'undefined') {
-                elements.push(div);
-            }
-        }
-
-        return elements;
+        return document.querySelectorAll('div[data-ctx-origin]');
     },
     _getPermutations: function() {
         let permutationsElement = document.getElementById('ctx-permutations');
