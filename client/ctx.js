@@ -1,3 +1,6 @@
+/* Generic base CTX library.
+ * Exposes CTX inverse permutation for client-side processing. */
+
 let CTX = {
     unpermute: function(permutation, permuted) {
         console.log('Unpermuting "' + permuted + '"\
