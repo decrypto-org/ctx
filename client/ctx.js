@@ -37,6 +37,9 @@ let CTXHTML = {
 
         let permutation = this.permutations[element.dataset.ctxOrigin];
         let permuted = element.innerHTML;
+        console.log('Permuted secret: ', permuted);
+        permuted = decodeURIComponent(permuted);
+        console.log('Decoded permuted secret: ', permuted);
         let secret = CTX.unpermute(permutation, permuted);
         element.innerHTML = secret;
     },
