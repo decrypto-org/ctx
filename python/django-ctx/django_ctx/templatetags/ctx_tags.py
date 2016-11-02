@@ -2,7 +2,7 @@
 
 from django import template
 from json import dumps
-from django.utils.html import escape
+from urllib import quote
 
 register = template.Library()
 
@@ -14,11 +14,11 @@ def ctx_protect(context, secret, origin=None, alphabet=None):
     except KeyError:
         raise KeyError('ctx not in Template context. Is the context processor for ctx properly set?')
 
-    # HTML escape is on by default in Django, but just in case force it anyway
-    protected_secret = escape(ctx.protect(secret, origin, alphabet))
+    protected_secret = ctx.protect(secret, origin, alphabet)
 
     return {
-        'protected': protected_secret
+        'permuted': quote(protected_secret['permuted']),
+        'origin_id': protected_secret['origin_id']
     }
 
 
