@@ -11,6 +11,7 @@ let CTX = {
         let secret = '';
         let inversePermutationMap = {};
 
+        // inversePermutationMap = _.zipObject(permutation, secretAlphabet)
         for (let i = 0; i < secretAlphabet.length; ++i) {
             inversePermutationMap[permutation[i]] = secretAlphabet[i];
         }
