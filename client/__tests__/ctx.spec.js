@@ -1,3 +1,4 @@
+/*
 describe('ctx client', function() {
     describe('missing translation table', function() {
         it('refuses to apply transformations', function() {
@@ -51,3 +52,4 @@ describe('ctx client', function() {
         document.body.removeElement(document.getElementById('fixture'));
     });
 });
+*/
