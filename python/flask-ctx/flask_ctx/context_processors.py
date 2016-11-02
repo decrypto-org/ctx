@@ -3,7 +3,7 @@
 from ctx_defense import CTX
 from json import dumps
 from flask import Markup
-from cgi import escape
+from urllib import quote
 
 
 def ctx_processor():
@@ -14,7 +14,7 @@ def ctx_processor():
         return Markup(
             "<div data-ctx-origin='{origin_id}'>{permuted}</div>".format(
                 origin_id=protected_secret['origin_id'],
-                permuted=escape(protected_secret['permuted'])
+                permuted=quote(protected_secret['permuted'])
                 )
             )
 
