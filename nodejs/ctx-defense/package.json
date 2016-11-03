@@ -1,11 +1,11 @@
 {
   "name": "ctx-defense",
   "version": "1.0.0",
-  "description": "server-side CTX library in nodejs",
-  "main": "ctx.js",
+  "description": "server-side CTX library for compression defense in nodejs",
+  "main": "ctx-defense.js",
+  "homepage": "https://www.ctxdefense.com/",
   "scripts": {
-    "test": "node --harmony spec/run.js",
-    "start": "node ctx.js"
+    "test": "node --harmony spec/run.js"
   },
   "author": "Eva Sarafianou",
   "license": "MIT",
