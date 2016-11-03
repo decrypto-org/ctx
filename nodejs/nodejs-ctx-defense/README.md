@@ -50,6 +50,11 @@ The *ctxPermutations* helper needs to be included after all *ctxProtect*
 helpers that use an origin for the first time. It is proposed that it is
 included before the *</body>* HTML tag.
 
+Include the client ctx script tag before the *</body>* HTML tag:
+
+```
+<script src=”ctx.js” <script>
+```
 
 ### Example
 
