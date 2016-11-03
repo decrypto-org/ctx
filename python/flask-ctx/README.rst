@@ -55,6 +55,11 @@ The *ctx_permutations* function needs to run after all *ctx_protect* calls
 that use an origin for the first time. It is proposed that it is included
 before the *</body>* HTML tag.
 
+- Include the ctx *client script* in the template:
+```html
+<script src="ctx.js"></script>
+```
+
 Example
 =======
 
@@ -73,6 +78,7 @@ Example
   This is another very sensitive secret: {{ ctx_protect("another secret", "origin2") }}
 
   {{ ctx_permutations() }}
+  <script src="ctx.js"></script>
 </body>
 
 </html>
