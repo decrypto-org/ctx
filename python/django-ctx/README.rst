@@ -67,6 +67,11 @@ printable](https://docs.python.org/2/library/string.html#string.printable) chara
  that use an origin for the first time. It is proposed that it is included
  before the *</body>* HTML tag.
 
+- Include the ctx *client script* in the template:
+```html
+<script src="ctx.js"></script>
+```
+
 Example
 =======
 ```html
@@ -86,6 +91,7 @@ Example
   This is another very sensitive secret from origin2: {% ctx_protect "my other secret" "origin2" "ASCII_printable" %}
 
   {% ctx_permutations %}
+  <script src="ctx.js"></script>
 </body>
 
 </html>
