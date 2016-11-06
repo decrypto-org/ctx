@@ -14,6 +14,10 @@
     "shuffle-array": "^1.0.0"
   },
   "devDependencies": {
+    "jshint": "^2.9.2",
     "jasmine": "^2.5.2"
+  },
+  "jshintConfig": {
+    "esversion": 6
   }
 }
