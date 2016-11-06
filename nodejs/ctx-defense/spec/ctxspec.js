@@ -2,7 +2,7 @@ ctx = require('../ctx');
 
 describe('CTX', () =>  {
 
-    let FakeCTX = new ctx;
+    let FakeCTX = new ctx();
 
     it('generates unique origin if not defined', () => {
         let permuted1 = FakeCTX.protect('secret');
