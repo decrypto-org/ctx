@@ -1,6 +1,6 @@
 {
   "name": "nodejs-ctx-defense",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "server-side CTX defense against compression attacks in nodejs",
   "main": "nodejs-ctx-defense.js",
   "scripts": {

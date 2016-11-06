@@ -1,4 +1,4 @@
-const ctx = require('../ctx-defense/ctx');
+const ctx = require('ctx-defense');
 
 module.exports = {
     createCtxObject: function() {
