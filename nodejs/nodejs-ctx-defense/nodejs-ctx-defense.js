@@ -2,11 +2,11 @@ const ctx = require('../ctx-defense/ctx');
 
 module.exports = {
     createCtxObject: function() {
-        
-        let ctxDefense = new ctx;
+
+        let ctxDefense = new ctx();
         return {
             ctxProtect: function(secret, origin) {
-                let protect = ctxDefense.protect(secret, origin); 
+                let protect = ctxDefense.protect(secret, origin);
                 return '<div data-ctx-origin=\'' + protect.origin_id + '\'>' +
                     encodeURIComponent(protect.permuted) + '</div>';
             },
@@ -17,4 +17,4 @@ module.exports = {
             }
         };
     }
-}
+};
