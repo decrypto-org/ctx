@@ -1,0 +1,14 @@
+language: python
+sudo: true
+install:
+    - pip install pep8
+    - nvm install 6.3
+    - nvm use 6.3
+    - npm install jshint
+    - cd nodejs/ctx-defense && npm install && cd ../..
+    - cd nodejs/nodejs-ctx-defense && npm install && cd ../..
+    - cd python/django-ctx && pip install -r requirements.txt && cd ../..
+    - cd python/flask-ctx && pip install -r requirements.txt && cd ../..
+    - gem install mdl
+script:
+    - make all
