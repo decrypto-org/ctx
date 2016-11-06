@@ -13,6 +13,10 @@
     "ctx-defense": "^1.0.0"
   },
   "devDependencies": {
-    "jasmine": "^2.5.2"                                                     
+    "jshint": "^2.9.2",
+    "jasmine": "^2.5.2"
+  },
+  "jshintConfig": {
+    "esversion": 6
   }
 }

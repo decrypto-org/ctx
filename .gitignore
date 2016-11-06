@@ -4,3 +4,8 @@
 *.aux
 *.log
 node_modules/
+.eggs/
+build/
+*.egg-info/
+dist/
+env/

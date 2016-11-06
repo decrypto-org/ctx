@@ -55,7 +55,8 @@ masking](https://www.facebook.com/notes/protect-the-graph/preventing-a-breach-at
 # Structure
 
 The HTML response plaintext consists of a plain HTML structure along with
-CTX-transformed parts. Each CTX part is annotated using an HTML *div* tag structured as:
+CTX-transformed parts. Each CTX part is annotated using an HTML *div* tag
+structured as:
 
 ```html
 <div data-ctx-origin='i'>xyx</div>
@@ -103,13 +104,13 @@ The CTX class provides the following API.
 
 ## API
 
-#### available_permuters
+### available_permuters
 
 A dictionary that defines the available permuters. The keys are strings that
 identify the secret alphabet. The values are classes that implement the permuter
 interface defined below.
 
-#### protect
+### protect
 
 Apply CTX on a specific secret.
 
@@ -134,7 +135,7 @@ Returns a dictionary with the following values:
 - *permuted*: the permuted data using the permutation generated for the given
   origin.
 
-#### get_permutations
+### get_permutations
 
 Get all generated permutations.
 
@@ -147,21 +148,22 @@ Permuters are classes that implement the permutation functionality
 for different secret alphabets. All permuters must implement the following
 interface:
 
-#### get_permutation
+### get_permutation
 
 Returns a string containing the generated permutation for the alphabet. This
 string defines a correlation of the plain alphabet and the permutation alphabet,
 i.e. the first character of the permutation is used to replace the occurencies
 of the first character of the plain alphabet in the secret etc.
 
-#### permute
+### permute
 
 Applies the generated permutation on each character and returns the permuted data.
 
 Arguments:
+
 - secret: A string of the plaintext secret.
 
-### Implemented permuters
+## Implemented permuters
 
 - ASCII_printable: A permuter for the alphabet consisting of printable ASCII
   characters, as defined in
@@ -175,8 +177,9 @@ When using Django templating, use `ctx_protect` with an appropriate origin
 parameter to protect your secret:
 
 ```html
-    {% ctx_protect "a secret", "an origin" %}
+{% ctx_protect "a secret", "an origin" %}
 ```
+
 For more information on the Django CTX, visit the [django-ctx
 repository](https://github.com/dimkarakostas/ctx/tree/master/etc/python/django-ctx).
 
@@ -205,7 +208,6 @@ Express/express-handlebars, Express/pug, Express/EJS and Koa.js/koa-pug.
 For more information on the nodejs-ctx-defense and its basic usage in the above
 frameworks/templates visit the [nodejs-ctx-defense
 folder](https://github.com/dimkarakostas/ctx/tree/master/nodejs/nodejs-ctx-defense).
-
 
 # Client implementation
 

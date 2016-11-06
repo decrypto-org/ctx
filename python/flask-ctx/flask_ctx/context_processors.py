@@ -15,8 +15,8 @@ def ctx_processor():
             "<div data-ctx-origin='{origin_id}'>{permuted}</div>".format(
                 origin_id=protected_secret['origin_id'],
                 permuted=quote(protected_secret['permuted'])
-                )
             )
+        )
 
     def ctx_permutations():
         return Markup(

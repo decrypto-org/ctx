@@ -48,7 +48,7 @@ class CTX {
         let allpermuters = [];
         for (let i = 0; i < this.permuters.length; i++) {
             allpermuters[i] = this.permuters[i].getPermutation();
-        };
+        }
         return allpermuters;
     }
 
@@ -77,7 +77,7 @@ class CTX {
             permuter = this.permuters[originId];
         }
         else {
-            permuter = new AsciPrintable;
+            permuter = new AsciPrintable();
             originId = this.permuters.length;
             this.origins[origin] = originId;
             this.permuters.push(permuter);
@@ -87,7 +87,7 @@ class CTX {
         return {
             'origin_id': originId,
             'permuted': permuted
-        }
+        };
     }
 }
 
