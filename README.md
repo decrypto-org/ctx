@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.org/dimkarakostas/ctx.svg?branch=master)](https://travis-ci.org/dimkarakostas/ctx)
+
 CTX - Context Transformation Extension
 ======================================
 
